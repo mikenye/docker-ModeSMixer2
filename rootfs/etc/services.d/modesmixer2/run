@@ -230,6 +230,12 @@ set -eo pipefail
 echo "Running: " "${MM2_BIN}" "${MM2_CMD[@]}" \
   2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[ModeSMixer2] " strftime("%Y/%m/%d %H:%M:%S", systime()) " " $0}'
 
+
+# Start ModesMixer in a specified directory to save the distances.json
+if [[ -n "$MM2_PATH" ]]; then
+    cd "${MM2_PATH}"
+fi
+
 # shellcheck disable=SC2016
 "${MM2_BIN}" "${MM2_CMD[@]}" \
   2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[ModeSMixer2] " strftime("%Y/%m/%d %H:%M:%S", systime()) " " $0}'
